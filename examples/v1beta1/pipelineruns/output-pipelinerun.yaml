@@ -32,7 +32,11 @@ spec:
   - name: write-new-stuff
     image: ubuntu
     command: ['bash']
-    args: ['-c', 'ln -s /workspace/damnworkspace /workspace/output/workspace && for ((i=1;i<=5000;i++)) ; do echo "Hello World" > /workspace/output/workspace/stuff ;  done']
+    args:
+      - |
+        #!/bin/bash
+        for ((i=1;i<=5000;i++)) ; do echo "Hello World"  ;  done
+        
 ---
 # Reads a file from a predefined path in the workspace git PipelineResource
 apiVersion: tekton.dev/v1beta1
