@@ -31,14 +31,8 @@ spec:
     args: ['-c', 'ls -la /workspace/damnworkspace/docs/README.md']  # tests that targetpath works
   - name: write-new-stuff
     image: ubuntu
-    script: |
-      #!/bin/bash
-      set -e -o pipefail
-      curl -sSL "https://gist.githubusercontent.com/pschultz/6388910/raw/5fa0681d8a8aadd60ff1aa6f947ce8754fab3d8c/color_test.sh" > color_test.sh
-      echo -e "\ncolor_test" >> color_test.sh
-      chmod 755 color_test.sh
-      cat color_test.sh
-      bash color_test.sh
+    command: ["/bin/bash"]
+    args: ['-c', 'curl -sSL "https://gist.githubusercontent.com/pschultz/6388910/raw/5fa0681d8a8aadd60ff1aa6f947ce8754fab3d8c/color_test.sh" > color_test.sh; echo -e "\ncolor_test" >> color_test.sh; chmod 755 color_test.sh; cat color_test.sh; bash color_test.sh']  # tests that targetpath works
 ---
 # Reads a file from a predefined path in the workspace git PipelineResource
 apiVersion: tekton.dev/v1beta1
