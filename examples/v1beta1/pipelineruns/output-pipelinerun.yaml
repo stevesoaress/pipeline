@@ -25,20 +25,15 @@ spec:
     - name: workspace
       type: git
   steps:
-    - name: read-docs-old
-      image: ubuntu
-      command: ["/bin/bash"]
-      args: ['-c', 'ls -la /workspace/damnworkspace/docs/README.md']  # tests that targetpath works
-    - name: write-new-stuff
-      image: ubuntu
-      script: |
-        #!/bin/bash
-        set -e -o pipefail
-        curl -sSL "https://gist.githubusercontent.com/pschultz/6388910/raw/5fa0681d8a8aadd60ff1aa6f947ce8754fab3d8c/color_test.sh" > color_test.sh
-        echo -e "\ncolor_test" >> color_test.sh
-        chmod 755 color_test.sh
-        cat color_test.sh
-        bash color_test.sh
+  - name: read-docs-old
+    image: ubuntu
+    command: ["/bin/bash"]
+    args: ['-c', 'ls -la /workspace/damnworkspace/docs/README.md']  # tests that targetpath works
+  - name: write-new-stuff
+    image: ubuntu
+    command: ['bash']
+    args: ['-c', 'for ((i=1;i<=5000;i++)) ; do echo "Hello World"  ;  done; sleep 10; for ((i=1;i<=5000;i++)) ; do echo "Hello World"  ;  done; sleep 10; for ((i=1;i<=5000;i++)) ; do echo "Hello World"  ;  done; sleep 10; for ((i=1;i<=5000;i++)) ; do echo "Hello World"  ;  done; sleep 10;']
+    args: ['-c', 'for ((i=1;i<=100;i++)) ; do echo $i  ;  done; sleep 10; for ((i=1;i<=200;i++)) ; do echo -e "\u001b[38;5;${i} ${i} \u001b[0m"  ;  done; sleep 10; for ((i=1;i<=1000;i++)) ; do echo $i  ;  done; sleep 10; for ((i=1;i<=2000;i++)) ; do echo $i  ;  done; sleep 10;']
 ---
 # Reads a file from a predefined path in the workspace git PipelineResource
 apiVersion: tekton.dev/v1beta1
