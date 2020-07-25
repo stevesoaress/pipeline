@@ -6,10 +6,6 @@ metadata:
   name: test-ansi-2-html
 spec:
   steps:
-  - name: read-docs-old
-    image: ubuntu
-    command: ["/bin/bash"]
-    args: ['-c', 'ls -la /workspace/damnworkspace/docs/README.md']  # tests that targetpath works
   - name: print-ansi-colors
     image: ibmcom/pipeline-base-image
     command: ['/bin/bash']
