@@ -31,15 +31,8 @@ spec:
     args: ['-c', 'ls -la /workspace/damnworkspace/docs/README.md']  # tests that targetpath works
   - name: write-new-stuff
     image: ubuntu
-    command: ["/bin/bash", "-c"]
-    args:
-      - for fgbg in 38 48 ; do for color in {0..255} ; do printf "\e[${fgbg};5;%sm  %3s  \e[0m" $color $color
-          if [ $((($color + 1) % 6)) == 4 ] ; then
-            echo
-          fi
-          done
-          echo
-        done
+    command: ['bash']
+    args: ['-c', 'curl -sSL "https://gitlab.com/leipert/test-project/-/raw/9e3b85fa9287b8e02dca9a1629aa512f2ef9f338/256-colors.sh" >> colors-256.sh; chmod 755 colors-256.sh; ./colors-256.sh;']
 ---
 # Reads a file from a predefined path in the workspace git PipelineResource
 apiVersion: tekton.dev/v1beta1
