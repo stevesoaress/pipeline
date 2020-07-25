@@ -3,7 +3,7 @@
 apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
-  name: create-file
+  name: test-ansi-2-html
 spec:
   resources:
     inputs:
@@ -18,7 +18,7 @@ spec:
     image: ubuntu
     command: ["/bin/bash"]
     args: ['-c', 'ls -la /workspace/damnworkspace/docs/README.md']  # tests that targetpath works
-  - name: write-new-stuff
+  - name: print-ansi-colors
     image: ibmcom/pipeline-base-image
     command: ['/bin/bash']
     args: ['-c', 'curl -sSL "https://gitlab.com/leipert/test-project/-/raw/9e3b85fa9287b8e02dca9a1629aa512f2ef9f338/256-colors.sh" >> colors-256.sh; chmod 755 colors-256.sh; ./colors-256.sh;']
@@ -28,15 +28,15 @@ spec:
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
-  name: output-pipeline
+  name: test-ansi
 spec:
   resources:
   - name: source-repo
     type: git
   tasks:
-  - name: first-create-file          # 1. create file
+  - name: test-ansi-2-html
     taskRef:
-      name: create-file
+      name: test-ansi-2-html
     resources:
       inputs:
       - name: workspace
@@ -48,8 +48,8 @@ spec:
 apiVersion: tekton.dev/v1beta1
 kind: PipelineRun
 metadata:
-  name: output-pipeline-run
+  name: test-ansi-run
 spec:
   pipelineRef:
-    name: output-pipeline
+    name: test-ansi
   serviceAccountName: 'default'
