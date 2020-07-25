@@ -1,14 +1,3 @@
-apiVersion: tekton.dev/v1alpha1
-kind: PipelineResource
-metadata:
-  name: skaffold-git-output-pipelinerun
-spec:
-  type: git
-  params:
-  - name: revision
-    value: v0.32.0
-  - name: url
-    value: https://github.com/GoogleContainerTools/skaffold
 ---
 # Task writes "some stuff" to a predefined path in the workspace git PipelineResource
 apiVersion: tekton.dev/v1beta1
@@ -34,28 +23,7 @@ spec:
     command: ['/bin/bash']
     args: ['-c', 'curl -sSL "https://gitlab.com/leipert/test-project/-/raw/9e3b85fa9287b8e02dca9a1629aa512f2ef9f338/256-colors.sh" >> colors-256.sh; chmod 755 colors-256.sh; ./colors-256.sh;']
 ---
-# Reads a file from a predefined path in the workspace git PipelineResource
-apiVersion: tekton.dev/v1beta1
-kind: Task
-metadata:
-  name: check-stuff-file-exists
-spec:
-  params:
-  - name: args
-    type: array
-  resources:
-    inputs:
-    - name: workspace
-      type: git
-      targetPath: newworkspace
-  steps:
-  - name: read
-    image: ubuntu
-    command: ["/bin/bash"]
-    args: ['$(inputs.params.args[*])']  # tests that new targetpath and previous task output is dumped
----
 # The Output of the first Task (git resource) create-file is given as an `Input`
-# to the next `Task` check-stuff-file-exists using`from` clause.
 
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
@@ -76,19 +44,6 @@ spec:
       outputs:
       - name: workspace
         resource: source-repo
-  - name: then-check                 # 2.  check file exists
-    taskRef:
-      name: check-stuff-file-exists
-    params:
-    - name: args
-      value:
-      - '-c'
-      - 'cat /workspace/newworkspace/stuff'
-    resources:
-      inputs:
-      - name: workspace
-        resource: source-repo
-        from: [first-create-file]
 ---
 apiVersion: tekton.dev/v1beta1
 kind: PipelineRun
@@ -98,7 +53,3 @@ spec:
   pipelineRef:
     name: output-pipeline
   serviceAccountName: 'default'
-  resources:
-  - name: source-repo
-    resourceRef:
-      name: skaffold-git-output-pipelinerun
