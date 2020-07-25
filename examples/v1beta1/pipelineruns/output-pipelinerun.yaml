@@ -30,20 +30,10 @@ kind: Pipeline
 metadata:
   name: test-ansi
 spec:
-  resources:
-  - name: source-repo
-    type: git
   tasks:
   - name: test-ansi-2-html
     taskRef:
       name: test-ansi-2-html
-    resources:
-      inputs:
-      - name: workspace
-        resource: source-repo
-      outputs:
-      - name: workspace
-        resource: source-repo
 ---
 apiVersion: tekton.dev/v1beta1
 kind: PipelineRun
