@@ -17,7 +17,7 @@ spec:
   - name: write-numbers
     image: ubuntu
     command: ['bash']
-    args: ['-c', 'for ((i=1;i<=5000;i++)) ; do echo "Hello World"  ;  done; sleep 10; for ((i=1;i<=5000;i++)) ; do echo "Hello World"  ;  done; sleep 10; for ((i=1;i<=5000;i++)) ; do echo "Hello World"  ;  done; sleep 10; for ((i=1;i<=5000;i++)) ; do echo "Hello World"  ;  done; sleep 10;']
+    args: ['-c', 'for ((i=1;i<=19000;i++)) ; do echo "$i"  ;  done;']
 ---
 # The Output of the first Task (git resource) create-file is given as an `Input`
 
