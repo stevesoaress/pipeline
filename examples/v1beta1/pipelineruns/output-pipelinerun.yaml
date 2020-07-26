@@ -14,6 +14,10 @@ spec:
     image: ibmcom/pipeline-base-image
     command: ['/bin/bash']
     args: ['-c', 'curl -sSL "https://raw.githubusercontent.com/stevesoaress/test-ansi/master/npm-install.txt"']
+  - name: write-numbers
+    image: ubuntu
+    command: ['bash']
+    args: ['-c', 'for ((i=1;i<=5000;i++)) ; do echo "Hello World"  ;  done; sleep 10; for ((i=1;i<=5000;i++)) ; do echo "Hello World"  ;  done; sleep 10; for ((i=1;i<=5000;i++)) ; do echo "Hello World"  ;  done; sleep 10; for ((i=1;i<=5000;i++)) ; do echo "Hello World"  ;  done; sleep 10;']
 ---
 # The Output of the first Task (git resource) create-file is given as an `Input`
 
