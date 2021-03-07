@@ -6,7 +6,7 @@ metadata:
   name: test-ansi-2-html
 spec:
   steps:
-  - name: print-ansi-colors
+  - name: create-sections
     image: ibmcom/pipeline-base-image
     command: ['/bin/bash']
     args: ['-c', 'echo -e "\e[0Ksection_start:`date +%s`:my_first_section\r\e[0KHeader of the 1st collapsible section"; echo "this line should be hidden when collapsed"; echo -e "\e[0Ksection_end:`date +%s`:my_first_section\r\e[0K"']
