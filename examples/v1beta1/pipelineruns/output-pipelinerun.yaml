@@ -9,6 +9,10 @@ spec:
   - name: print-ansi-colors
     image: ibmcom/pipeline-base-image
     command: ['/bin/bash']
+    args: ['-c', 'echo -e "\e[0Ksection_start:`date +%s`:my_first_section\r\e[0KHeader of the 1st collapsible section"; echo "this line should be hidden when collapsed"; echo -e "\e[0Ksection_end:`date +%s`:my_first_section\r\e[0K"']
+  - name: print-ansi-colors
+    image: ibmcom/pipeline-base-image
+    command: ['/bin/bash']
     args: ['-c', 'curl -sSL "https://gitlab.com/leipert/test-project/-/raw/9e3b85fa9287b8e02dca9a1629aa512f2ef9f338/256-colors.sh" >> colors-256.sh; chmod 755 colors-256.sh; ./colors-256.sh;']
   - name: print-ansi-colors-example
     image: ibmcom/pipeline-base-image
